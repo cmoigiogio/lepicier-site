@@ -1,0 +1,74 @@
+---
+import "../styles/global.css";
+import { getImage } from "astro:assets";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { site } from "../data/site";
+import ogSource from "../assets/photos/devanture.jpg";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title,
+  description = "L’Épicier, speakeasy à Paris 3e : cocktails de création aux accents libanais, cachés derrière une épicerie. 24 rue Notre-Dame-de-Nazareth.",
+} = Astro.props;
+const fullTitle = title ? `${title} · L’Épicier` : "L’Épicier · Speakeasy à Paris 3e";
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const og = await getImage({ src: ogSource, width: 1200, height: 630, fit: "cover", format: "jpg" });
+// Preview deployments must not compete with the live site in search engines: index only when explicitly enabled.
+const indexable = import.meta.env.INDEXABLE === "1";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BarOrPub",
+  name: site.name,
+  url: Astro.site?.toString(),
+  image: new URL(og.src, Astro.site).toString(),
+  email: site.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: site.address.street,
+    postalCode: site.address.postalCode,
+    addressLocality: site.address.city,
+    addressCountry: "FR",
+  },
+  hasMenu: new URL("/carte", Astro.site).toString(),
+  sameAs: [site.instagram.url],
+  openingHoursSpecification: [
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Tuesday", "Wednesday", "Thursday"], opens: "19:00", closes: "01:00" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Friday", "Saturday"], opens: "18:00", closes: "02:00" },
+  ],
+};
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {!indexable && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#07080f" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="L’Épicier" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(og.src, Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body class="grain min-h-dvh">
+    <a href="#contenu" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[70] focus:rounded focus:bg-amber focus:px-4 focus:py-2 focus:text-night">Aller au contenu</a>
+    <Header />
+    <main id="contenu">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

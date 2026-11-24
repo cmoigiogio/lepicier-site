@@ -1,0 +1,97 @@
+---
+import { Picture } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import { menu } from "../data/menu";
+import { photos } from "../data/gallery";
+---
+<Layout title="La carte" description="La carte de L’Épicier : cocktails de création, grands classiques, mocktails, spiritueux et petites assiettes à partager. Paris 3e.">
+  <section class="relative isolate overflow-hidden pt-36 pb-16">
+    <Picture src={photos.lanternesCouleurs.src} alt="" widths={[800, 1600]} sizes="100vw" layout="full-width" class="absolute inset-0 -z-10 h-full w-full object-cover opacity-20" priority />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-night/40 to-night"></div>
+    <div class="mx-auto max-w-5xl px-5 text-center lg:px-8">
+      <p class="eyebrow">Menu · Drinks & food</p>
+      <h1 class="mt-5 font-display text-5xl sm:text-7xl">La carte</h1>
+      <p class="mx-auto mt-6 max-w-xl text-sand">Découvrez notre menu · <span class="italic">Discover our menu</span></p>
+      <a href="/menu-lepicier.pdf" class="btn-ghost mt-8" download>Télécharger le PDF</a>
+    </div>
+  </section>
+
+  <!-- Section nav -->
+  <nav class="sticky top-18 z-40 border-y border-line bg-night/85 backdrop-blur-md" aria-label="Sections de la carte">
+    <ul class="mx-auto flex max-w-5xl gap-1 overflow-x-auto px-5 py-3 [scrollbar-width:none] lg:justify-center lg:px-8">
+      {menu.map((s) => (
+        <li><a href={`#${s.id}`} class="block whitespace-nowrap rounded-full px-4 py-2 text-sm text-cream/75 transition hover:bg-panel hover:text-amber" data-menu-link>{s.title}</a></li>
+      ))}
+    </ul>
+  </nav>
+
+  <div class="mx-auto max-w-5xl px-5 py-16 lg:px-8">
+    {menu.map((section) => (
+      <section id={section.id} class="scroll-mt-36 py-14 first:pt-0" data-menu-section>
+        <header class="reveal text-center">
+          <h2 class="font-display text-4xl text-amber sm:text-5xl">{section.title}</h2>
+          <p class="mt-2 italic text-sand">{section.titleEn}</p>
+          {section.intro && <p class="mt-4 inline-block rounded-full border border-jade/40 bg-jade/10 px-4 py-1.5 text-xs tracking-wide text-cream/90">{section.intro}</p>}
+          <div class="rule mx-auto mt-6 max-w-xs" aria-hidden="true">◆</div>
+        </header>
+
+        <div class:list={["mt-12 grid gap-x-14 gap-y-12", section.groups.length > 1 && "md:grid-cols-2"]}>
+          {section.groups.map((g) => (
+            <div class="reveal">
+              {(section.groups.length > 1 || g.price) && (
+                <div class="mb-5 flex items-baseline justify-between border-b border-amber/30 pb-3">
+                  <h3 class="font-display text-2xl">
+                    {g.title}
+                    {g.titleEn && <span class="ml-2 font-sans text-xs tracking-wide text-mute italic">{g.titleEn}</span>}
+                  </h3>
+                  {g.price && <span class="font-display text-2xl text-amber-soft">{g.price}<span class="text-base"> €</span></span>}
+                </div>
+              )}
+              <ul class:list={["space-y-5", section.groups.length === 1 && section.groups[0]!.items.length > 4 && "md:grid md:grid-cols-2 md:gap-x-14 md:gap-y-7 md:space-y-0"]}>
+                {g.items.map((it) => (
+                  <li>
+                    <div class="flex items-baseline gap-3">
+                      <span class="font-medium tracking-wide text-cream">
+                        {it.name}{it.allergen && <sup class="ml-0.5 text-amber" title="Allergène">*</sup>}
+                      </span>
+                      {it.tag && <span class="text-[11px] tracking-wide text-mute uppercase">{it.tag}</span>}
+                      <span class="mx-1 flex-1 translate-y-[-3px] border-b border-dotted border-line"></span>
+                      {it.desc && <span class="text-sm text-sand">{it.desc}</span>}
+                      {it.price && <span class="font-display text-lg text-amber-soft">{it.price}</span>}
+                    </div>
+                    {it.fr && <p class="mt-1 text-sm leading-relaxed text-sand">{it.fr}</p>}
+                    {it.en && <p class="mt-0.5 text-sm leading-relaxed text-mute italic">{it.en}</p>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <p class="mt-10 border-t border-line pt-6 text-center text-xs text-mute">
+      Prix en € TTC · <span class="text-amber">*</span> Allergène — renseignez-vous auprès de l’équipe · L’abus d’alcool est dangereux pour la santé.
+    </p>
+  </div>
+</Layout>
+
+<script>
+  // Highlight the section currently in view in the sticky menu nav.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>("[data-menu-link]")];
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        links.forEach((l) => {
+          const on = l.hash === `#${e.target.id}`;
+          l.classList.toggle("bg-panel", on);
+          l.classList.toggle("text-amber", on);
+          if (on) l.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+        });
+      }
+    },
+    { rootMargin: "-40% 0px -55% 0px" },
+  );
+  document.querySelectorAll("[data-menu-section]").forEach((s) => io.observe(s));
+</script>

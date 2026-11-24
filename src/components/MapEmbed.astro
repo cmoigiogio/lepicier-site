@@ -1,0 +1,31 @@
+---
+import { site, mapsQuery, directionsUrl } from "../data/site";
+const embed = `https://www.google.com/maps?q=${mapsQuery}&z=16&output=embed`;
+---
+<!-- Click-to-load: no Google request (or cookie) until the visitor asks for the map. -->
+<div class="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-line bg-panel md:aspect-auto md:h-full md:min-h-80" data-map data-src={embed}>
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,#2848b833,transparent_55%),radial-gradient(circle_at_80%_80%,#d6402f26,transparent_50%)]"></div>
+  <div class="relative flex h-full flex-col items-center justify-center gap-4 p-8 text-center">
+    <svg viewBox="0 0 24 24" class="h-10 w-10 text-amber" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+    <p class="font-display text-xl">{site.address.street}<br /><span class="text-sand">{site.address.postalCode} {site.address.city}</span></p>
+    <div class="flex flex-wrap justify-center gap-3">
+      <button type="button" class="btn-ghost" data-map-load>Afficher la carte</button>
+      <a href={directionsUrl} target="_blank" rel="noopener" class="btn-primary">Itinéraire</a>
+    </div>
+    <p class="text-xs text-mute">La carte est fournie par Google Maps.</p>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-map]").forEach((box) => {
+    box.querySelector("[data-map-load]")?.addEventListener("click", () => {
+      const iframe = document.createElement("iframe");
+      iframe.src = box.dataset.src!;
+      iframe.title = "Plan d’accès à L’Épicier";
+      iframe.loading = "lazy";
+      iframe.referrerPolicy = "no-referrer-when-downgrade";
+      iframe.className = "absolute inset-0 h-full w-full border-0 [filter:invert(.9)_hue-rotate(180deg)_saturate(.8)]";
+      box.replaceChildren(iframe);
+    });
+  });
+</script>

@@ -1,0 +1,35 @@
+---
+import { site } from "../data/site";
+interface Props { class?: string }
+const { class: cls = "" } = Astro.props;
+---
+<dl class:list={["divide-y divide-line", cls]} data-hours>
+  {site.hours.map((h) => (
+    <div class="flex items-baseline justify-between gap-6 py-4" data-dow={h.dow.join(",")}>
+      <dt class="text-cream/90">{h.days}</dt>
+      <dd class="font-display text-xl text-amber-soft">{h.hours}</dd>
+    </div>
+  ))}
+  <div class="flex items-baseline justify-between gap-6 py-4">
+    <dt class="text-cream/90">{site.hoursNote.days}</dt>
+    <dd class="text-right text-sm text-sand">{site.hoursNote.text}</dd>
+  </div>
+  <div class="flex items-baseline justify-between gap-6 py-4">
+    <dt class="text-cream/90">Privatisation</dt>
+    <dd class="text-sm text-sand">{site.privatisation}</dd>
+  </div>
+</dl>
+
+<script>
+  // Highlight tonight's opening hours (Paris time). After midnight the night still belongs to the
+  // previous day, so shift by 6 h before taking the weekday. Purely informative.
+  const paris = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Paris" }));
+  const dow = new Date(paris.getTime() - 6 * 3_600_000).getDay();
+  document.querySelectorAll<HTMLElement>("[data-hours] [data-dow]").forEach((row) => {
+    if (row.dataset.dow!.split(",").map(Number).includes(dow)) {
+      row.classList.add("text-amber");
+      const dt = row.querySelector("dt")!;
+      dt.insertAdjacentHTML("beforeend", ' <span class="ml-2 rounded-full bg-amber/15 px-2 py-0.5 align-middle text-[10px] font-semibold uppercase tracking-widest text-amber">Ce soir</span>');
+    }
+  });
+</script>

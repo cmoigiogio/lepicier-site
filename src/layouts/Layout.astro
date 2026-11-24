@@ -7,10 +7,13 @@ import { site } from "../data/site";
 import ogSource from "../assets/photos/devanture.jpg";
 
 interface Props {
+  /** Home screen: no footer, the page ends with the hero. */
+  bare?: boolean;
   title?: string;
   description?: string;
 }
 const {
+  bare = false,
   title,
   description = "L’Épicier, speakeasy à Paris 3e : cocktails de création aux accents libanais, cachés derrière une épicerie. 24 rue Notre-Dame-de-Nazareth.",
 } = Astro.props;
@@ -69,6 +72,6 @@ const jsonLd = {
     <main id="contenu">
       <slot />
     </main>
-    <Footer />
+    {!bare && <Footer />}
   </body>
 </html>

@@ -15,7 +15,30 @@ const large = await Promise.all(gallery.map((p) => getImage({ src: p.src, width:
     </div>
   </section>
 
-  <section class="pb-24">
+  <!-- L'EXPÉRIENCE (déplacée depuis l'accueil) -->
+  <section class="relative border-y border-line bg-ink/80 py-20">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+      <div class="reveal max-w-2xl">
+        <p class="eyebrow">L’expérience</p>
+        <h2 class="mt-4 font-display text-4xl leading-tight sm:text-5xl text-balance">Une épicerie en façade, un bar caché derrière.</h2>
+      </div>
+      <div class="mt-14 grid gap-6 md:grid-cols-3">
+        {[
+          { n: "01", t: "Cocktails de création", d: "Arak, rose, basilic, lavande, gingembre : cinq signatures, toutes disponibles sans alcool.", c: "from-amber/25" },
+          { n: "02", t: "Petites assiettes", d: "Houmous, caviar d’aubergine, rillettes du chef, baklawa et guimauve à la rose, à partager.", c: "from-jade/25" },
+          { n: "03", t: "Privatisation", d: "Pour vos soirées privées, le bar se privatise sur demande. Écrivez-nous.", c: "from-lantern/25" },
+        ].map((f) => (
+          <article class={`reveal group relative overflow-hidden rounded-2xl border border-line bg-gradient-to-b ${f.c} to-panel/40 p-8 transition duration-500 hover:-translate-y-1 hover:border-amber/40`}>
+            <span class="font-display text-5xl text-cream/15 transition group-hover:text-amber/40">{f.n}</span>
+            <h3 class="mt-6 font-display text-2xl">{f.t}</h3>
+            <p class="mt-3 leading-relaxed text-sand">{f.d}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16">
     <div class="mx-auto max-w-7xl columns-2 gap-3 px-5 md:columns-3 md:gap-4 lg:px-8">
       {gallery.map((p, i) => (
         <button type="button" class="reveal group relative mb-3 block w-full overflow-hidden rounded-xl break-inside-avoid md:mb-4" data-open={i} aria-label={`Agrandir : ${p.alt}`}>

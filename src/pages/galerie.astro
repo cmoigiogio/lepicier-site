@@ -21,7 +21,7 @@ const large = await Promise.all(gallery.map((p) => getImage({ src: p.src, width:
     <div class="mx-auto grid max-w-7xl grid-cols-2 gap-3 px-5 md:grid-cols-4 md:gap-4 lg:px-8">
       {featured.map((p, i) => (
         <button type="button" class:list={["reveal group relative block overflow-hidden rounded-xl", i === 0 ? "col-span-2 aspect-[4/5] md:row-span-2 md:aspect-auto" : "aspect-[4/5]"]} data-open={i} aria-label={`Agrandir : ${p.alt}`}>
-          <Picture src={p.src} alt={p.alt} widths={i === 0 ? [600, 900, 1300] : [400, 700, 1000]} sizes={i === 0 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 50vw"} class:list={["h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]", i === 0 && "md:absolute md:inset-0"]} loading={i < 3 ? "eager" : "lazy"} />
+          <Picture src={p.src} alt={p.alt} widths={i === 0 ? [600, 900, 1300] : [400, 700, 1000]} sizes={i === 0 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 50vw"} class={`h-full w-full object-cover transition duration-700 group-hover:scale-[1.04] ${i === 0 ? "md:absolute md:inset-0" : ""}`} loading={i < 3 ? "eager" : "lazy"} />
           <span class="absolute inset-0 bg-night/0 transition group-hover:bg-night/20"></span>
         </button>
       ))}

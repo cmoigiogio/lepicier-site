@@ -21,6 +21,15 @@ const pad = (n: number) => String(n + 1).padStart(2, "0");
     <h1 class="mt-5 font-display text-6xl font-medium sm:text-8xl">La carte</h1>
     <p class="mx-auto mt-5 max-w-xl text-sand">Découvrez notre menu · <span class="italic">Discover our menu</span></p>
     <div class="rule mx-auto mt-8 max-w-xs" aria-hidden="true">◆</div>
+    <a
+      href="/menu-lepicier.pdf"
+      download="carte-lepicier.pdf"
+      type="application/pdf"
+      class="btn-ghost mt-8 px-5 py-2 text-[0.7rem] whitespace-nowrap tracking-[0.2em] uppercase"
+    >
+      <svg aria-hidden="true" viewBox="0 0 24 24" class="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14" /></svg>
+      Télécharger la carte
+    </a>
   </header>
 
   <!-- Section nav -->
@@ -126,8 +135,7 @@ const pad = (n: number) => String(n + 1).padStart(2, "0");
     ))}
 
     <footer class="mt-20 border-t border-line pt-8 text-center">
-      <a href="/menu-lepicier.pdf" class="btn-ghost" download>Télécharger la carte en PDF</a>
-      <p class="mt-6 text-xs text-mute">
+      <p class="text-xs text-mute">
         Prix en € TTC · <span class="text-amber">*</span> Allergène — renseignez-vous auprès de l’équipe · L’abus d’alcool est dangereux pour la santé.
       </p>
     </footer>

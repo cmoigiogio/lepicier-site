@@ -1,7 +1,7 @@
 ---
 import Logo from "./Logo.astro";
 import Social from "./Social.astro";
-import { site, directionsUrl } from "../data/site";
+import { site } from "../data/site";
 const year = new Date().getFullYear();
 ---
 <footer class="relative border-t border-line bg-ink">
@@ -16,7 +16,6 @@ const year = new Date().getFullYear();
       <address class="mt-4 text-sm not-italic leading-relaxed text-cream/85">
         {site.address.street}<br />{site.address.postalCode} {site.address.city}
       </address>
-      <a href={directionsUrl} target="_blank" rel="noopener" class="mt-3 inline-block text-sm text-amber hover:text-amber-soft">Itinéraire →</a>
     </div>
     <div>
       <h2 class="eyebrow">Horaires</h2>

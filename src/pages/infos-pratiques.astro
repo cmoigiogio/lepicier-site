@@ -1,7 +1,6 @@
 ---
 import { Picture } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
-import Hours from "../components/Hours.astro";
 import MapEmbed from "../components/MapEmbed.astro";
 import Social from "../components/Social.astro";
 import { photos } from "../data/gallery";
@@ -34,12 +33,7 @@ import { site, reservationHref, directionsUrl } from "../data/site";
         <Picture src={photos.devanture.src} alt={photos.devanture.alt} widths={[400, 700]} sizes="(min-width: 1024px) 33vw, 100vw" class="h-full max-h-80 w-full object-cover lg:max-h-none" />
       </article>
 
-      <article class="reveal rounded-2xl border border-line bg-panel/60 p-8 lg:col-span-1">
-        <p class="eyebrow">Heures d’ouverture</p>
-        <Hours class="mt-4" />
-      </article>
-
-      <div class="reveal min-h-96 lg:col-span-2">
+      <div class="reveal min-h-96 lg:col-span-3">
         <MapEmbed />
       </div>
     </div>

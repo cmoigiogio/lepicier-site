@@ -1,7 +1,7 @@
 ---
 import Logo from "./Logo.astro";
 import Social from "./Social.astro";
-import { site, reservationHref, directionsUrl } from "../data/site";
+import { site, directionsUrl } from "../data/site";
 const year = new Date().getFullYear();
 ---
 <footer class="relative border-t border-line bg-ink">
@@ -23,7 +23,6 @@ const year = new Date().getFullYear();
       <ul class="mt-4 space-y-2 text-sm text-cream/85">
         {site.hours.map((h) => <li>{h.days}<br /><span class="text-sand">{h.hours}</span></li>)}
       </ul>
-      <a href={reservationHref} class="mt-4 inline-block text-sm text-amber hover:text-amber-soft">Réserver par e-mail →</a>
     </div>
   </div>
   <div class="border-t border-line">

@@ -11,6 +11,10 @@ import lanternesCouleurs from "../assets/photos/lanternes-couleurs.jpg";
 import panneauStop from "../assets/photos/panneau-stop.jpg";
 import statueDoree from "../assets/photos/statue-doree.jpg";
 import mosaique from "../assets/photos/mosaique.jpg";
+import cocktailVert from "../assets/photos/cocktail-vert.jpg";
+import cocktailEclaboussure from "../assets/photos/cocktail-eclaboussure.jpg";
+import houmousCocktail from "../assets/photos/houmous-cocktail.jpg";
+import serviceVerseuse from "../assets/photos/service-verseuse.jpg";
 
 export type Photo = { src: ImageMetadata; alt: string };
 
@@ -27,11 +31,24 @@ export const photos = {
   panneauStop: { src: panneauStop, alt: "Panneau stop bilingue français-arabe utilisé comme plateau de table" },
   statueDoree: { src: statueDoree, alt: "Statue dorée devant une photo nocturne d’une mosquée et d’un clocher" },
   mosaique: { src: mosaique, alt: "Détail du sol en mosaïque" },
+  cocktailVert: { src: cocktailVert, alt: "Cocktail vert mousseux surmonté d’une feuille de basilic, sur un comptoir en onyx" },
+  cocktailEclaboussure: { src: cocktailEclaboussure, alt: "Éclaboussure de mousse au-dessus d’un cocktail vert, une feuille en plein vol" },
+  houmousCocktail: { src: houmousCocktail, alt: "Cocktail en coupe tenu à la main, houmous et pain libanais sur une table panneau stop" },
+  serviceVerseuse: { src: serviceVerseuse, alt: "Boisson versée d’une verseuse rouge dans une petite tasse orientale décorée" },
 } satisfies Record<string, Photo>;
 
-/** Order used on the gallery page. */
-export const gallery: Photo[] = [
+/** Photos mises en avant en haut de la galerie : la façade, puis le shooting pro. */
+export const featured: Photo[] = [
   photos.devanture,
+  photos.cocktailVert,
+  photos.cocktailEclaboussure,
+  photos.houmousCocktail,
+  photos.serviceVerseuse,
+];
+
+/** Order used on the gallery page (featured first, then the masonry). */
+export const gallery: Photo[] = [
+  ...featured,
   photos.salleLanternes,
   photos.cocktailsTiki,
   photos.epicerie,

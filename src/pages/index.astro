@@ -17,9 +17,10 @@ import { site, reservationHref } from "../data/site";
 
     <h1 class="sr-only">L’Épicier, speakeasy à Paris 3e</h1>
     <Logo class="text-[clamp(3.25rem,11vw,9rem)] drop-shadow-[0_8px_40px_rgba(0,0,0,.6)]" />
-    <p class="mt-5 px-6 font-display text-lg text-cream drop-shadow-[0_2px_12px_rgba(0,0,0,.8)] sm:text-2xl">
-      Le seul bar caché de Paris
-      <span class="mt-1 block text-sm text-cream/75 italic sm:text-base" lang="en">The only hidden bar in Paris</span>
+    <!-- Accroche : les deux lignes ont la même largeur (la plus courte est justifiée sur la plus longue) -->
+    <p class="mt-5 inline-flex flex-col items-stretch font-display text-cream drop-shadow-[0_2px_12px_rgba(0,0,0,.8)] [&>span]:whitespace-nowrap [&>span]:[text-align-last:justify] [&>span]:text-justify">
+      <span class="text-[clamp(1.05rem,4.9vw,1.6rem)]">Le seul bar libanais caché de Paris</span>
+      <span class="mt-1 text-[clamp(0.9rem,4.1vw,1.3rem)] text-cream/75 italic" lang="en">The only hidden Lebanese bar in Paris</span>
     </p>
     <div class="mt-8 flex flex-col items-center gap-3 text-cream/85">
       <span class="h-px w-12 bg-amber/70"></span>

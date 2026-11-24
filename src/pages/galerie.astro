@@ -1,17 +1,30 @@
 ---
 import { Picture, getImage } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
-import { gallery } from "../data/gallery";
+import { gallery, featured } from "../data/gallery";
+const rest = gallery.slice(featured.length);
 
 // Large versions for the lightbox (generated at build time).
 const large = await Promise.all(gallery.map((p) => getImage({ src: p.src, width: 1800, format: "webp" })));
 ---
 <Layout title="Galerie" description="L’Épicier en images : la devanture, la salle sous les lanternes, les cocktails et les détails du bar. Paris 3e.">
-  <section class="pt-36 pb-12">
+  <section class="pt-36 pb-10">
     <div class="mx-auto max-w-7xl px-5 lg:px-8">
       <p class="eyebrow">Galerie</p>
       <h1 class="mt-5 font-display text-5xl sm:text-7xl">Sous les lanternes</h1>
       <p class="mt-6 max-w-xl text-sand">Une épicerie, une porte, puis la lumière des lanternes. Cliquez sur une photo pour l’agrandir.</p>
+    </div>
+  </section>
+
+  <!-- À LA UNE : la façade en grand, puis les photos du shooting -->
+  <section class="pb-16">
+    <div class="mx-auto grid max-w-7xl grid-cols-2 gap-3 px-5 md:grid-cols-4 md:gap-4 lg:px-8">
+      {featured.map((p, i) => (
+        <button type="button" class:list={["reveal group relative block overflow-hidden rounded-xl", i === 0 ? "col-span-2 aspect-[4/5] md:row-span-2 md:aspect-auto" : "aspect-[4/5]"]} data-open={i} aria-label={`Agrandir : ${p.alt}`}>
+          <Picture src={p.src} alt={p.alt} widths={i === 0 ? [600, 900, 1300] : [400, 700, 1000]} sizes={i === 0 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 50vw"} class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" loading={i < 3 ? "eager" : "lazy"} />
+          <span class="absolute inset-0 bg-night/0 transition group-hover:bg-night/20"></span>
+        </button>
+      ))}
     </div>
   </section>
 
@@ -40,8 +53,8 @@ const large = await Promise.all(gallery.map((p) => getImage({ src: p.src, width:
 
   <section class="py-16">
     <div class="mx-auto max-w-7xl columns-2 gap-3 px-5 md:columns-3 md:gap-4 lg:px-8">
-      {gallery.map((p, i) => (
-        <button type="button" class="reveal group relative mb-3 block w-full overflow-hidden rounded-xl break-inside-avoid md:mb-4" data-open={i} aria-label={`Agrandir : ${p.alt}`}>
+      {rest.map((p, i) => (
+        <button type="button" class="reveal group relative mb-3 block w-full overflow-hidden rounded-xl break-inside-avoid md:mb-4" data-open={i + featured.length} aria-label={`Agrandir : ${p.alt}`}>
           <Picture src={p.src} alt={p.alt} widths={[400, 700, 1000]} sizes="(min-width: 768px) 33vw, 50vw" class="w-full transition duration-700 group-hover:scale-[1.04]" />
           <span class="absolute inset-0 bg-night/0 transition group-hover:bg-night/20"></span>
         </button>

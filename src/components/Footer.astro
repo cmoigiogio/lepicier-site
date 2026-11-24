@@ -1,5 +1,6 @@
 ---
 import Logo from "./Logo.astro";
+import Social from "./Social.astro";
 import { site, reservationHref, directionsUrl } from "../data/site";
 const year = new Date().getFullYear();
 ---
@@ -8,10 +9,7 @@ const year = new Date().getFullYear();
     <div class="md:col-span-2">
       <a href="/" class="text-3xl"><Logo /></a>
       <p class="mt-4 max-w-sm text-sm leading-relaxed text-sand">{site.tagline}. Poussez la porte de l’épicerie.</p>
-      <a href={site.instagram.url} target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-2 text-sm text-cream/80 transition hover:text-amber">
-        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
-        @{site.instagram.handle}
-      </a>
+      <Social class="mt-6" />
     </div>
     <div>
       <h2 class="eyebrow">Adresse</h2>

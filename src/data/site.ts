@@ -6,6 +6,7 @@ export const site = {
   email: "vinci@outlook.fr",
   reservationSubject: "Réservation Épicier",
   instagram: { handle: "lepicier_paris", url: "https://www.instagram.com/lepicier_paris/" },
+  tiktok: { handle: "lepicier_paris", url: "https://www.tiktok.com/@lepicier_paris" },
   privatisation: "Sur demande",
   hours: [
     { days: "Mardi · Mercredi · Jeudi", hours: "19 h – 1 h", dow: [2, 3, 4], open: "19:00", close: "01:00" },

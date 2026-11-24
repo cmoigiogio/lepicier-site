@@ -8,11 +8,13 @@ const links = [
   { href: "/galerie", label: "Galerie" },
   { href: "/infos-pratiques", label: "Infos pratiques" },
 ];
-const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+// With build.format "file", pathname can be "/index.html" or "/carte.html": normalise.
+const path = Astro.url.pathname.replace(/(\/index)?\.html$/, "").replace(/\/$/, "") || "/";
+const isHome = path === "/";
 ---
-<header class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-colors duration-300 data-[scrolled]:border-line/70 data-[scrolled]:bg-night/80 data-[scrolled]:backdrop-blur-md" data-header>
+<header data-home={isHome ? "true" : undefined} class="group/h fixed inset-x-0 top-0 z-50 border-b border-transparent transition-colors duration-300 data-[scrolled]:border-line/70 data-[scrolled]:bg-night/80 data-[scrolled]:backdrop-blur-md" data-header>
   <div class="mx-auto flex h-18 max-w-7xl items-center justify-between px-5 lg:px-8">
-    <a href="/" class="text-2xl" aria-label="L’Épicier — accueil"><Logo /></a>
+    <a href="/" class="text-2xl transition duration-300 group-data-[home]/h:opacity-0 group-data-[home]/h:group-data-[scrolled]/h:opacity-100" aria-label="L’Épicier — accueil"><Logo /></a>
 
     <nav class="hidden items-center gap-8 md:flex" aria-label="Navigation principale">
       {links.map((l) => (
@@ -22,7 +24,7 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
           class="relative text-sm tracking-wide text-cream/80 transition hover:text-cream aria-[current=page]:text-amber after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-amber after:transition-all hover:after:w-full aria-[current=page]:after:w-full"
         >{l.label}</a>
       ))}
-      <a href={reservationHref} class="btn-primary !px-5 !py-2.5">Réserver</a>
+      <a href={reservationHref} class="btn-primary !px-5 !py-2.5 transition duration-300 group-data-[home]/h:pointer-events-none group-data-[home]/h:opacity-0 group-data-[home]/h:group-data-[scrolled]/h:pointer-events-auto group-data-[home]/h:group-data-[scrolled]/h:opacity-100">Réserver</a>
     </nav>
 
     <button type="button" class="md:hidden -mr-2 p-2 text-cream" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-nav" data-menu-toggle>
@@ -45,7 +47,7 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 
 <script>
   const header = document.querySelector<HTMLElement>("[data-header]")!;
-  const onScroll = () => header.toggleAttribute("data-scrolled", window.scrollY > 24);
+  const onScroll = () => header.toggleAttribute("data-scrolled", window.scrollY > (header.hasAttribute("data-home") ? window.innerHeight * 0.6 : 24));
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 

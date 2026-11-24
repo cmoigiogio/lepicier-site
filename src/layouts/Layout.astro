@@ -35,7 +35,7 @@ const jsonLd = {
     addressCountry: "FR",
   },
   hasMenu: new URL("/carte", Astro.site).toString(),
-  sameAs: [site.instagram.url],
+  sameAs: [site.instagram.url, site.tiktok.url],
   openingHoursSpecification: [
     { "@type": "OpeningHoursSpecification", dayOfWeek: ["Tuesday", "Wednesday", "Thursday"], opens: "19:00", closes: "01:00" },
     { "@type": "OpeningHoursSpecification", dayOfWeek: ["Friday", "Saturday"], opens: "18:00", closes: "02:00" },

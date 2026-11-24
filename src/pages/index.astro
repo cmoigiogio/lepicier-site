@@ -6,54 +6,32 @@ import MapEmbed from "../components/MapEmbed.astro";
 import { photos } from "../data/gallery";
 import { menu } from "../data/menu";
 import { site, reservationHref } from "../data/site";
+import Logo from "../components/Logo.astro";
+import Social from "../components/Social.astro";
 
 const signatures = menu.find((s) => s.id === "signatures")!.groups[0]!;
 const preview = [photos.salleLanternes, photos.cocktailsTiki, photos.epicerie, photos.lanternesNuit, photos.murRouge, photos.alcove];
 ---
 <Layout>
-  <!-- HERO -->
-  <section class="relative isolate overflow-hidden pt-28 pb-20 md:pt-36 lg:min-h-[100dvh] lg:pb-28">
+  <!-- HERO — épuré : photo plein écran, logo centré, adresse, bouton Réserver en bas au centre -->
+  <section class="relative isolate flex h-[100svh] min-h-[560px] flex-col items-center justify-center overflow-hidden text-center">
     <div class="absolute inset-0 -z-10">
-      <Picture src={photos.lanternesNuit.src} alt="" widths={[800, 1400, 2000]} sizes="100vw" layout="full-width" class="h-full w-full object-cover opacity-25 blur-sm" priority />
-      <div class="absolute inset-0 bg-gradient-to-b from-night/70 via-night/85 to-night"></div>
-      <div class="absolute -top-40 left-1/2 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-amber/15 blur-3xl animate-flicker"></div>
+      <Picture src={photos.salleLanternes.src} alt="" widths={[800, 1152]} sizes="100vw" layout="full-width" class="hero-zoom h-full w-full object-cover" priority />
+      <div class="absolute inset-0 bg-night/55"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#07080fcc_85%)]"></div>
     </div>
 
-    <div class="mx-auto grid max-w-7xl items-center gap-14 px-5 lg:grid-cols-[1.1fr_0.9fr] lg:px-8">
-      <div>
-        <p class="eyebrow">{site.tagline}</p>
-        <h1 class="mt-6 font-display text-5xl leading-[1.02] font-medium tracking-tight text-balance sm:text-6xl lg:text-7xl xl:text-8xl">
-          Poussez la porte <em class="font-normal text-amber not-italic sm:italic">de l’épicerie.</em>
-        </h1>
-        <p class="mt-8 max-w-xl text-lg leading-relaxed text-sand text-pretty">
-          Derrière les rayons, un bar caché sous les lanternes&nbsp;: cocktails de création aux accents libanais, petites assiettes à partager et longues nuits douces.
-        </p>
-        <div class="mt-10 flex flex-wrap gap-4">
-          <a href={reservationHref} class="btn-primary">Réserver une table</a>
-          <a href="/carte" class="btn-ghost">Découvrir la carte</a>
-        </div>
-        <dl class="mt-14 grid max-w-lg grid-cols-2 gap-6 border-t border-line pt-6 text-sm">
-          <div>
-            <dt class="text-mute">Adresse</dt>
-            <dd class="mt-1 text-cream/90">{site.address.street}<br />{site.address.postalCode} {site.address.city}</dd>
-          </div>
-          <div>
-            <dt class="text-mute">Horaires</dt>
-            <dd class="mt-1 text-cream/90">Mar – Jeu · 19 h – 1 h<br />Ven – Sam · 18 h – 2 h</dd>
-          </div>
-        </dl>
-      </div>
+    <h1 class="sr-only">L’Épicier, speakeasy à Paris 3e</h1>
+    <Logo class="text-[clamp(3.25rem,11vw,9rem)] drop-shadow-[0_8px_40px_rgba(0,0,0,.6)]" />
+    <div class="mt-8 flex flex-col items-center gap-3 text-cream/85">
+      <span class="h-px w-12 bg-amber/70"></span>
+      <p class="text-[11px] font-medium tracking-[0.42em] uppercase">{site.address.street}</p>
+      <p class="text-[11px] font-medium tracking-[0.42em] uppercase">{site.address.postalCode} {site.address.city}</p>
+    </div>
 
-      <div class="relative mx-auto w-full max-w-md lg:max-w-none">
-        <div class="absolute -inset-6 -z-10 rounded-[2.5rem] bg-gradient-to-br from-lantern/30 via-lapis/20 to-amber/30 blur-2xl"></div>
-        <div class="overflow-hidden rounded-[2rem] border border-cream/10 shadow-2xl shadow-black/60">
-          <Picture src={photos.devanture.src} alt={photos.devanture.alt} widths={[480, 720, 1086]} sizes="(min-width: 1024px) 40vw, 90vw" class="aspect-[3/4] w-full object-cover" priority />
-        </div>
-        <div class="absolute -bottom-8 -left-6 hidden w-40 overflow-hidden rounded-2xl border-4 border-night shadow-xl sm:block lg:-left-12 lg:w-48">
-          <Picture src={photos.epicerie.src} alt={photos.epicerie.alt} widths={[240, 400]} sizes="12rem" class="aspect-square w-full object-cover" />
-        </div>
-        <p class="absolute -right-2 -bottom-4 rotate-[-4deg] rounded-full bg-lantern px-4 py-2 text-xs font-semibold tracking-widest text-cream uppercase shadow-lg">Entrée par l’épicerie</p>
-      </div>
+    <div class="absolute inset-x-0 bottom-10 flex flex-col items-center gap-6 sm:bottom-14">
+      <a href={reservationHref} class="border border-cream/70 px-10 py-4 font-display text-sm tracking-[0.35em] text-cream uppercase transition duration-300 hover:border-amber hover:bg-amber hover:text-night">Réserver</a>
+      <span class="h-12 w-px animate-pulse bg-gradient-to-b from-cream/70 to-transparent" aria-hidden="true"></span>
     </div>
   </section>
 
@@ -137,9 +115,9 @@ const preview = [photos.salleLanternes, photos.cocktailsTiki, photos.epicerie, p
         <p class="eyebrow">Infos pratiques</p>
         <h2 class="mt-4 font-display text-4xl sm:text-5xl">Nous trouver</h2>
         <Hours class="mt-10 border-y border-line" />
-        <div class="mt-10 flex flex-wrap gap-4">
+        <div class="mt-10 flex flex-wrap items-center gap-4">
           <a href={reservationHref} class="btn-primary">Réserver par e-mail</a>
-          <a href={site.instagram.url} target="_blank" rel="noopener" class="btn-ghost">Instagram</a>
+          <Social size="lg" />
         </div>
       </div>
       <div class="reveal min-h-80">
